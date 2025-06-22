@@ -23,8 +23,10 @@ library
   import:           warnings
   exposed-modules:  NTSC.Types
                   , NTSC.Color
+                  , CLI
   build-depends:    base ^>=4.19.2.0
                   , linear
+                  , optparse-applicative
   hs-source-dirs:   src
 
 executable ntsc-codec
@@ -32,6 +34,5 @@ executable ntsc-codec
   main-is:          Main.hs
   build-depends:    base ^>=4.19.2.0
                   , ntsc-codec
-                  , optparse-applicative
   hs-source-dirs:   app
   ghc-options:      -O2 -threaded -rtsopts -with-rtsopts=-N

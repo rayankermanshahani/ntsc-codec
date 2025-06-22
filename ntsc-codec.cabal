@@ -35,4 +35,10 @@ executable ntsc-codec
   build-depends:    base ^>=4.19.2.0
                   , ntsc-codec
   hs-source-dirs:   app
-  ghc-options:      -O2 -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:      -O2 
+                    -threaded 
+                    -rtsopts 
+                    -with-rtsopts=-N
+                    -funbox-strict-fields
+                    -fspecialise-aggressively
+                    -flate-dmd-anal

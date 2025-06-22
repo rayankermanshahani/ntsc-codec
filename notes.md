@@ -10,7 +10,7 @@ National Television System Committee, North American Standard
   - frame is divided into odd and even lines (odd comes first)
   - refresh rates: ~59.94 fields/s ~= 29.97 fps (frames/s)
 - horizontal scan:
-  - total length = ~63.55 µs = 1/15734 Hz
+  - total length = ~63.55 µs = 1/15734 Hz (aka line rate)
   - horizontal blanking interval (~10.9 µs per line); contains sync pulse and color burst
     - front porch (~1.5 µs); ensures beam is fully off at blanking level (0 IRE) before the sync
     - horizontal sync pulse (~4.7 µs); broad negative (-40 IRE) pulse that signals EOL to tell receiver to retrace to next line
@@ -23,7 +23,7 @@ National Television System Committee, North American Standard
   - ~4.2 MHz luminance bandwidth (monochrome)
 - color subcarrier:
   - ~3.579545 MHz used for chrominance modulation
-  - chosen as 455/2 times the horizontal line rate
+  - chosen as 455/2 times the horizontal line rate 
 - audio carrier:
   - +4.5 MHz offset from video carrier
   - frequency-modulated (FM) with the TV sound
@@ -58,11 +58,20 @@ National Television System Committee, North American Standard
     - back porch (~1.6 µs); blanking period (0 IRE) after color burst to give receiver time to clamp its black level and retrace before active video starts
   - active video (~52.9 µs per line) 
     - modulates instantaneous amplitude of composite signal to carry picture luminance (Y)
-- vertical blanking and vertical sync **(TODO: more indepth notes on this)**:
+- vertical blanking and vertical sync:
   - vertical blanking interval (VBI) occurs at end end of each field 
   - VBI signal informs electron beam to return from bottom to top (ie. start a new field)
   - vertical blanking spans the ~45 lines (= 525 total - 480 visible) that are not used for picture data
-  - vertical sync pulses 
+  - VBI pattern: 
+    - 6 equalizing pulses before
+      - ~2.3 µs each
+      - come twice the normal line rate (every ~31.778 µs instead of 63.55 µs)
+      - "keep-alive" signals to horizontal sync circuits
+    - 3 vertical sync pulses
+      - broad high level pulses
+      - inverted from normal sync
+      - tells receiver to start new field 
+    - 6 equalizing pulses after
 
 ### YIQ color model
 - luminance signal, luma (Y'):

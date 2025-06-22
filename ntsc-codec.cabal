@@ -1,0 +1,37 @@
+cabal-version:      3.0
+name:               ntsc-codec
+version:            0.1.0.0
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             rayankermanshahani
+maintainer:         rayan.k@gmx.com
+category:           Codec
+build-type:         Simple
+
+common warnings
+  default-language: Haskell2010
+  ghc-options:      -Wall
+                    -Wcompat
+                    -Widentities
+                    -Wpartial-fields
+                    -Wmissing-export-lists
+                    -Wmissing-home-modules
+                    -Wredundant-constraints
+                    -Wincomplete-uni-patterns
+
+library
+  import:           warnings
+  exposed-modules:  NTSC.Types
+                  , NTSC.Color
+  build-depends:    base ^>=4.19.2.0
+                  , linear
+  hs-source-dirs:   src
+
+executable ntsc-codec
+  import:           warnings
+  main-is:          Main.hs
+  build-depends:    base ^>=4.19.2.0
+                  , ntsc-codec
+                  , optparse-applicative
+  hs-source-dirs:   app
+  ghc-options:      -O2 -threaded -rtsopts -with-rtsopts=-N

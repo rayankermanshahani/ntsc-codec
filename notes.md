@@ -20,9 +20,15 @@ National Television System Committee, North American Standard
   - active video (~52.9 µs per line) 
     - modulates instantaneous amplitude of composite signal to carry picture luminance (Y)
 - video bandwidth:
+  - ~4.2 MHz luminance bandwidth (monochrome)
 - color subcarrier:
+  - ~3.579545 MHz used for chrominance modulation
+  - chosen as 455/2 times the horizontal line rate
 - audio carrier:
+  - +4.5 MHz offset from video carrier
+  - frequency-modulated (FM) with the TV sound
 
+## General notes
 - interlaced scanning:
   - image is split into two fields; odd and even lines
   - each field has 262.5 lines; total of 525 lines

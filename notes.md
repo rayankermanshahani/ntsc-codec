@@ -77,6 +77,3 @@ National Television System Committee, North American Standard
   - the I and Q signals aplitude-modulate two subcarrier waves of frequency ~3.579545 MHz
     - one cosine and the other sine
     - I and Q are 90 degrees out of phase
-
-
-Email completed project to Travis Whitaker at Anduril: travis@anduril.com

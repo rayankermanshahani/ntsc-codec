@@ -2,9 +2,6 @@ module Main (main) where
 
 import CLI (Command (..), execParser, opts, runDecode, runEncode, runInfo)
 
--- import System.Exit (exitFailure)
--- import System.IO (hPutStrLn, stderr)
-
 main :: IO ()
 main = do
   cmd <- execParser opts

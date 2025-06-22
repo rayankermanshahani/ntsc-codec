@@ -16,9 +16,6 @@ where
 import NTSC.Types
 import Options.Applicative
 
--- import System.Exit (exitFailure)
--- import System.IO (hPutStrLn, stderr)
-
 -- | Main command type
 data Command
   = Encode EncodeOptions
@@ -168,7 +165,7 @@ parseEncodeOptions =
       )
     <*> switch
       ( long "verbose"
-          <> short 'b'
+          <> short 'v'
           <> help "Verbose output"
       )
 
@@ -220,7 +217,7 @@ parseDecodeOptions =
       )
     <*> switch
       ( long "verbose"
-          <> short 'b'
+          <> short 'v'
           <> help "Verbose output"
       )
 

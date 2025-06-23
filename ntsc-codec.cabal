@@ -52,3 +52,19 @@ executable ntsc-codec
                     -funbox-strict-fields
                     -fspecialise-aggressively
                     -flate-dmd-anal
+
+executable examples
+  import:           warnings
+  main-is:          Main.hs
+  build-depends:    base ^>=4.19.2.0
+                  , ntsc-codec
+                  , mtl
+                  , vector
+  hs-source-dirs:   examples
+  ghc-options:      -O2 
+                    -threaded 
+                    -rtsopts 
+                    -with-rtsopts=-N
+                    -funbox-strict-fields
+                    -fspecialise-aggressively
+                    -flate-dmd-anal

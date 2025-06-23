@@ -23,11 +23,21 @@ library
   import:           warnings
   exposed-modules:  NTSC.Types
                   , NTSC.Color
+                  , NTSC.Signal
                   , CLI
   build-depends:    base ^>=4.19.2.0
+                  , vector
+                  , mtl
                   , linear
                   , optparse-applicative
   hs-source-dirs:   src
+  ghc-options:      -O2 
+                    -threaded 
+                    -rtsopts 
+                    -with-rtsopts=-N
+                    -funbox-strict-fields
+                    -fspecialise-aggressively
+                    -flate-dmd-anal
 
 executable ntsc-codec
   import:           warnings

@@ -1,6 +1,8 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DisambiguateRecordFields #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE TypeFamilies #-}
 
 module NTSC.Types
   ( -- * Core Types
@@ -53,11 +55,51 @@ module NTSC.Types
   )
 where
 
+import Data.Vector.Generic (Vector (basicLength))
+import qualified Data.Vector.Generic as VG
+import Data.Vector.Generic.Mutable (MVector (basicInitialize))
+import qualified Data.Vector.Generic.Mutable as VGM
+import qualified Data.Vector.Unboxed as VU
 import GHC.Generics (Generic)
 
 -- | A single sample value (voltage or normalized amplitude)
 newtype Sample = Sample {unSample :: Double}
   deriving (Show, Eq, Ord, Num, Fractional, Floating, Generic)
+
+newtype instance VU.MVector s Sample = MV_Sample (VU.MVector s Double)
+
+newtype instance VU.Vector Sample = V_Sample (VU.Vector Double)
+
+instance VGM.MVector VU.MVector Sample where
+  {-# INLINE basicLength #-}
+  basicLength (MV_Sample v) = VGM.basicLength v
+  {-# INLINE basicUnsafeSlice #-}
+  basicUnsafeSlice i n (MV_Sample v) = MV_Sample $ VGM.basicUnsafeSlice i n v
+  {-# INLINE basicOverlaps #-}
+  basicOverlaps (MV_Sample v1) (MV_Sample v2) = VGM.basicOverlaps v1 v2
+  {-# INLINE basicUnsafeNew #-}
+  basicUnsafeNew n = MV_Sample <$> VGM.basicUnsafeNew n
+  {-# INLINE basicUnsafeRead #-}
+  basicUnsafeRead (MV_Sample v) i = Sample <$> VGM.basicUnsafeRead v i
+  {-# INLINE basicUnsafeWrite #-}
+  basicUnsafeWrite (MV_Sample v) i (Sample x) = VGM.basicUnsafeWrite v i x
+
+  {-# INLINE basicInitialize #-}
+  basicInitialize (MV_Sample v) = VGM.basicInitialize v
+
+instance VG.Vector VU.Vector Sample where
+  {-# INLINE basicUnsafeFreeze #-}
+  basicUnsafeFreeze (MV_Sample v) = V_Sample <$> VG.basicUnsafeFreeze v
+  {-# INLINE basicUnsafeThaw #-}
+  basicUnsafeThaw (V_Sample v) = MV_Sample <$> VG.basicUnsafeThaw v
+  {-# INLINE basicLength #-}
+  basicLength (V_Sample v) = VG.basicLength v
+  {-# INLINE basicUnsafeSlice #-}
+  basicUnsafeSlice i n (V_Sample v) = V_Sample $ VG.basicUnsafeSlice i n v
+  {-# INLINE basicUnsafeIndexM #-}
+  basicUnsafeIndexM (V_Sample v) i = Sample <$> VG.basicUnsafeIndexM v i
+
+instance VU.Unbox Sample
 
 -- | IRE (Institute of Radio Engineers) units for NTSC signal levels
 newtype IRELevel = IRELevel {unIRE :: Double}
